@@ -190,7 +190,7 @@ function load_game() {
     if (player.currentChallenge == "challenge12" || player.currentChallenge == "challenge9" || player.currentChallenge == "challenge5") document.getElementById("quickReset").style.display = "inline-block";
     else document.getElementById("quickReset").style.display = "none";
  
-    document.getElementById("notation").innerHTML = "Notation: " + player.options.notation
+    document.getElementById("notation").innerHTML = "数字格式: " + player.options.notation
 
     var achievements = document.getElementsByClassName('achievement');
     var achievement;
@@ -207,7 +207,7 @@ function load_game() {
 
 function save_game() {
     set_cookie('dimensionSave', player);
-    $.notify("Game saved", "info")
+    $.notify("游戏已保存", "info")
 }
 
 
@@ -277,12 +277,12 @@ function updateMoney() {
 function updateCoinPerSec() {
     var element = document.getElementById("coinsPerSec");
     if (player.currentChallenge == "challenge3") {
-      element.innerHTML = 'You are getting ' + shortenDimensions(calcPerSec(player.firstAmount, player.firstPow, player.infinityUpgrades.includes("18Mult"))*player.chall3Pow) + ' antimatter per second.';
+      element.innerHTML = '你获得 ' + shortenDimensions(calcPerSec(player.firstAmount, player.firstPow, player.infinityUpgrades.includes("18Mult"))*player.chall3Pow) + ' 反物质每秒。';
     } else if (player.currentChallenge == "challenge7") {
-      element.innerHTML = 'You are getting ' + shortenDimensions(calcPerSec(player.firstAmount, player.firstPow, player.infinityUpgrades.includes("18Mult")) + 
-			  calcPerSec(Math.pow(player.secondAmount,1.5), Math.pow(player.secondPow,1.7)*10, player.infinityUpgrades.includes("27Mult"))) + ' antimatter per second.';
+      element.innerHTML = '你获得 ' + shortenDimensions(calcPerSec(player.firstAmount, player.firstPow, player.infinityUpgrades.includes("18Mult")) + 
+			  calcPerSec(Math.pow(player.secondAmount,1.5), Math.pow(player.secondPow,1.7)*10, player.infinityUpgrades.includes("27Mult"))) + ' 反物质每秒。';
     } else {
-      element.innerHTML = 'You are getting ' + shortenDimensions(calcPerSec(player.firstAmount, player.firstPow, player.infinityUpgrades.includes("18Mult"))) + ' antimatter per second.';
+      element.innerHTML = '你获得 ' + shortenDimensions(calcPerSec(player.firstAmount, player.firstPow, player.infinityUpgrades.includes("18Mult"))) + ' 反物质每秒。';
     }
 }
 
@@ -318,7 +318,7 @@ function getDimensionDescription(tier) {
     let description = shortenDimensions(player[name + 'Amount']) + ' (' + player[name + 'Bought'] + ')';
     
     if (tier < 8) {
-        description += '  (+' + formatValue(player.options.notation, getDimensionRateOfChange(tier).toFixed(1), 2, 1) + '%/s)';
+        description += '  (+' + formatValue(player.options.notation, getDimensionRateOfChange(tier).toFixed(1), 2, 1) + '%/秒)';
     }
     
     return description;
@@ -400,7 +400,7 @@ function updateDimensions() {
     
     for (let tier = 1; tier <= 8; ++tier) {
         const name = TIER_NAMES[tier];
-        document.getElementById(name + "D").innerHTML = DISPLAY_NAMES[tier] + " Dimension x" + formatValue(player.options.notation, getDimensionFinalMultiplier(tier), 1, 1);
+        document.getElementById(name + "D").innerHTML = DISPLAY_NAMES[tier] + " 维度 x" + formatValue(player.options.notation, getDimensionFinalMultiplier(tier), 1, 1);
         document.getElementById(name + "Amount").innerHTML = getDimensionDescription(tier);  
     }
 
@@ -418,7 +418,7 @@ function updateDimensions() {
     }
     
     if (canBuyTickSpeed()) {
-        document.getElementById("tickLabel").innerHTML = 'Reduce the tick interval by ' + Math.round((1 - getTickSpeedMultiplier()) * 100) + '%.';
+        document.getElementById("tickLabel").innerHTML = '减少生产间隔' + Math.round((1 - getTickSpeedMultiplier()) * 100) + '%.';
         
         document.getElementById("tickSpeed").style.visibility = "visible";
         document.getElementById("tickSpeedMax").style.visibility = "visible";
@@ -428,22 +428,22 @@ function updateDimensions() {
     
     const shiftRequirement = getShiftRequirement();
     if (player.currentChallenge == "challenge4" ? shiftRequirement.tier < 6 : shiftRequirement.tier < 8) {
-        document.getElementById("resetLabel").innerHTML = 'Dimension Shift: requires ' + shiftRequirement.amount + " " + DISPLAY_NAMES[shiftRequirement.tier] + " Dimensions";
+        document.getElementById("resetLabel").innerHTML = '维度移动：需要 ' + shiftRequirement.amount + " " + DISPLAY_NAMES[shiftRequirement.tier] + " 维度";
     }
-    else document.getElementById("resetLabel").innerHTML = 'Dimension Boost: requires ' + shiftRequirement.amount + " " + DISPLAY_NAMES[shiftRequirement.tier] + " Dimensions";
+    else document.getElementById("resetLabel").innerHTML = '维度提升：需要 ' + shiftRequirement.amount + " " + DISPLAY_NAMES[shiftRequirement.tier] + " 维度";
     
     if (player.currentChallenge == "challenge4" ? player.resets > 2 : player.resets > 3) {
-        document.getElementById("softReset").innerHTML = "Reset the game for a Boost";
+        document.getElementById("softReset").innerHTML = "重置游戏促进发展";
     } else {
-        document.getElementById("softReset").innerHTML = "Reset the game for a new Dimension";
+        document.getElementById("softReset").innerHTML = "重置游戏到达下一个维度";
     }
 
-    if (player.currentChallenge != "challenge4") document.getElementById("secondResetLabel").innerHTML = 'Antimatter Galaxies: requires ' + getGalaxyRequirement() + ' Eighth Dimensions';
-    else document.getElementById("secondResetLabel").innerHTML = 'Antimatter Galaxies: requires ' + getGalaxyRequirement() + ' Sixth Dimensions';
-    document.getElementById("totalmoney").innerHTML = 'You have made a total of ' + shortenMoney(player.totalmoney) + ' antimatter.';
-    document.getElementById("totalresets").innerHTML = 'You have done ' + player.resets + ' soft resets.';
-    document.getElementById("galaxies").innerHTML = 'You have ' + Math.round(player.galaxies) + ' Antimatter Galaxies.';
-    document.getElementById("totalTime").innerHTML = "You have played for " + timeDisplay(player.totalTimePlayed) + ".";
+    if (player.currentChallenge != "challenge4") document.getElementById("secondResetLabel").innerHTML = '反物质星系：需要 ' + getGalaxyRequirement() + ' Eighth Dimensions';
+    else document.getElementById("secondResetLabel").innerHTML = '反物质星系：需要 ' + getGalaxyRequirement() + ' 第六维度';
+    document.getElementById("totalmoney").innerHTML = '你总共制造了' + shortenMoney(player.totalmoney) + ' 反物质.';
+    document.getElementById("totalresets").innerHTML = '你完成了 ' + player.resets + ' 次软复位.';
+    document.getElementById("galaxies").innerHTML = '你拥有 ' + Math.round(player.galaxies) + ' 反物质星系。';
+    document.getElementById("totalTime").innerHTML = "你玩了 " + timeDisplay(player.totalTimePlayed) + "。";
 
     if (player.bestInfinityTime == 9999999999) {
         document.getElementById("bestInfinity").innerHTML = ""
@@ -467,32 +467,32 @@ function updateDimensions() {
 }
 
 function updateCosts() {
-    document.getElementById("first").innerHTML = 'Cost: ' + shortenCosts(player.firstCost);
-    document.getElementById("second").innerHTML = 'Cost: ' + shortenCosts(player.secondCost);
-    document.getElementById("third").innerHTML = 'Cost: ' + shortenCosts(player.thirdCost);
-    document.getElementById("fourth").innerHTML = 'Cost: ' + shortenCosts(player.fourthCost);
-    document.getElementById("fifth").innerHTML = 'Cost: ' + shortenCosts(player.fifthCost);
-    document.getElementById("sixth").innerHTML = 'Cost: ' + shortenCosts(player.sixthCost);
-    document.getElementById("seventh").innerHTML = 'Cost: ' + shortenCosts(player.seventhCost);
-    document.getElementById("eight").innerHTML = 'Cost: ' + shortenCosts(player.eightCost);
+    document.getElementById("first").innerHTML = '花费： ' + shortenCosts(player.firstCost);
+    document.getElementById("second").innerHTML = '花费： ' + shortenCosts(player.secondCost);
+    document.getElementById("third").innerHTML = '花费： ' + shortenCosts(player.thirdCost);
+    document.getElementById("fourth").innerHTML = '花费： ' + shortenCosts(player.fourthCost);
+    document.getElementById("fifth").innerHTML = '花费： ' + shortenCosts(player.fifthCost);
+    document.getElementById("sixth").innerHTML = '花费： ' + shortenCosts(player.sixthCost);
+    document.getElementById("seventh").innerHTML = '花费： ' + shortenCosts(player.seventhCost);
+    document.getElementById("eight").innerHTML = '花费： ' + shortenCosts(player.eightCost);
     
-    document.getElementById("firstMax").innerHTML = 'Until 10, Cost: ' + shortenCosts(player.firstCost * (10 - player.firstBought));
-    document.getElementById("secondMax").innerHTML = 'Until 10, Cost: ' + shortenCosts(player.secondCost * (10 - player.secondBought));
-    document.getElementById("thirdMax").innerHTML = 'Until 10, Cost: ' + shortenCosts(player.thirdCost * (10 - player.thirdBought));
-    document.getElementById("fourthMax").innerHTML = 'Until 10, Cost: ' + shortenCosts(player.fourthCost * (10 - player.fourthBought));
-    document.getElementById("fifthMax").innerHTML = 'Until 10, Cost: ' + shortenCosts(player.fifthCost * (10 - player.fifthBought));
-    document.getElementById("sixthMax").innerHTML = 'Until 10, Cost: ' + shortenCosts(player.sixthCost * (10 - player.sixthBought));
-    document.getElementById("seventhMax").innerHTML = 'Until 10, Cost: ' + shortenCosts(player.seventhCost * (10 - player.seventhBought));
-    document.getElementById("eightMax").innerHTML = 'Until 10, Cost: ' + shortenCosts(player.eightCost * (10 - player.eightBought));
+    document.getElementById("firstMax").innerHTML = '一次买 10，花费： ' + shortenCosts(player.firstCost * (10 - player.firstBought));
+    document.getElementById("secondMax").innerHTML = '一次买 10，花费： ' + shortenCosts(player.secondCost * (10 - player.secondBought));
+    document.getElementById("thirdMax").innerHTML = '一次买 10，花费： ' + shortenCosts(player.thirdCost * (10 - player.thirdBought));
+    document.getElementById("fourthMax").innerHTML = '一次买 10，花费： ' + shortenCosts(player.fourthCost * (10 - player.fourthBought));
+    document.getElementById("fifthMax").innerHTML = '一次买 10，花费： ' + shortenCosts(player.fifthCost * (10 - player.fifthBought));
+    document.getElementById("sixthMax").innerHTML = '一次买 10，花费： ' + shortenCosts(player.sixthCost * (10 - player.sixthBought));
+    document.getElementById("seventhMax").innerHTML = '一次买 10，花费： ' + shortenCosts(player.seventhCost * (10 - player.seventhBought));
+    document.getElementById("eightMax").innerHTML = '一次买 10，花费： ' + shortenCosts(player.eightCost * (10 - player.eightBought));
     
-    document.getElementById("tickSpeed").innerHTML = 'Cost: ' + shortenCosts(player.tickSpeedCost);
+    document.getElementById("tickSpeed").innerHTML = '花费： ' + shortenCosts(player.tickSpeedCost);
 }
 
 function updateTickSpeed() {
     var exp = Math.floor(Math.log10(player.tickspeed));
-    if (exp > 1) document.getElementById("tickSpeedAmount").innerHTML = 'Tickspeed: ' + Math.round(player.tickspeed);
+    if (exp > 1) document.getElementById("tickSpeedAmount").innerHTML = '生产速度: ' + Math.round(player.tickspeed);
     else {
-        document.getElementById("tickSpeedAmount").innerHTML = 'Tickspeed: ' + Math.round(player.tickspeed * (100 / Math.pow(10, exp))) + ' / ' + shorten(100 / Math.pow(10, exp));
+        document.getElementById("tickSpeedAmount").innerHTML = '生产速度: ' + Math.round(player.tickspeed * (100 / Math.pow(10, exp))) + ' / ' + shorten(100 / Math.pow(10, exp));
     }
     if (player.tickspeed < 1e-28 && !player.achievements.includes("Faster than a potato")) giveAchievement("Faster than a potato");
 
@@ -731,15 +731,15 @@ function buyMaxTickSpeed() {
 function timeDisplay(time) {
     time =(time / 10)
     if (time >= 31536000) {
-        return Math.floor(time / 31536000) + " years, " + Math.floor((time % 31536000) / 86400) + " days, " + Math.floor((time % 86400) / 3600) + " hours, " + Math.floor((time % 3600) / 60) + " minutes and " + Math.floor(time % 60) + " seconds"
+        return Math.floor(time / 31536000) + " 年, " + Math.floor((time % 31536000) / 86400) + " 天, " + Math.floor((time % 86400) / 3600) + " 小时, " + Math.floor((time % 3600) / 60) + " 分钟 " + Math.floor(time % 60) + " 秒"
     } else if (time >= 86400) {
-        return Math.floor(time / 86400) + " days, " + Math.floor((time % 86400) / 3600) + " hours, " + Math.floor((time % 3600) / 60) + " minutes and " + Math.floor(time % 60) + " seconds"
+        return Math.floor(time / 86400) + " 天, " + Math.floor((time % 86400) / 3600) + " 小时, " + Math.floor((time % 3600) / 60) + " 分钟 " + Math.floor(time % 60) + " 秒"
     } else if (time >= 3600) {
-        return Math.floor(time / 3600) + " hours, " + Math.floor((time % 3600) / 60) + " minutes and " + Math.floor(time % 60) + " seconds"
+        return Math.floor(time / 3600) + " 小时, " + Math.floor((time % 3600) / 60) + " 分钟 " + Math.floor(time % 60) + " 秒"
     } else if (time >= 60) {
-        return Math.floor(time / 60) + " minutes and " + Math.floor(time % 60) + " seconds"
-    } else if (time >= 10) return Math.floor(time % 60) + " seconds" 
-    else return time.toFixed(1) + " seconds"
+        return Math.floor(time / 60) + " 分" + Math.floor(time % 60) + " 秒"
+    } else if (time >= 10) return Math.floor(time % 60) + " 秒" 
+    else return time.toFixed(1) + " 秒"
 }
 
 
@@ -759,7 +759,7 @@ function giveAchievement(name) {
 }
 
 const TIER_NAMES = [ null, "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eight" ];
-const DISPLAY_NAMES = [ null, "First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth" ];
+const DISPLAY_NAMES = [ null, "第一", "第二", "第三", "第四", "第五", "第六", "第七", "第八" ];
 
 function canAfford(cost) {
     return cost < Infinity && cost <= player.money;
@@ -841,18 +841,18 @@ function getDimensionCostMultiplier(tier) {
 
 function onBuyDimension(tier) {
     switch (tier) {
-        case 1: giveAchievement("You gotta start somewhere"); break;
-        case 2: giveAchievement("100 antimatter is a lot"); break;
-        case 3: giveAchievement("Half life 3 confirmed"); break;
-        case 4: giveAchievement("L4D: Left 4 Dimensions"); break;
-        case 5: giveAchievement("5 Dimension Antimatter Punch"); break;
-        case 6: giveAchievement("We couldn't afford 9"); break;
-        case 7: giveAchievement("Not a luck related achievement"); break;
-        case 8: giveAchievement("90 degrees to infinity"); break;
+        case 1: giveAchievement("你必须从某个地方开始"); break;
+        case 2: giveAchievement("100 反物质是很多的"); break;
+        case 3: giveAchievement("半条命3已证实"); break;
+        case 4: giveAchievement("L4D: 剩下 4 维度"); break;
+        case 5: giveAchievement("5维反物质冲床"); break;
+        case 6: giveAchievement("我们无法承受9"); break;
+        case 7: giveAchievement("不是运气相关的成就"); break;
+        case 8: giveAchievement("90度到无穷大"); break;
     }
     
     if (tier == 8 && player.eightAmount == 99) {
-        giveAchievement("The 9th Dimension is a lie");
+        giveAchievement("第九维度是骗人的");
     }
     
     updateCosts();
@@ -1186,7 +1186,7 @@ function updateAchPow() {
         player.achPow = Math.pow(1.5, amount)
     }
 
-    document.getElementById("achmultlabel").innerHTML = "Current achievement multiplier on each Dimension: " + player.achPow.toFixed(1) + "x"
+    document.getElementById("achmultlabel").innerHTML = "每个维度当前成绩倍数：" + player.achPow.toFixed(1) + "x"
 
 
 }
@@ -1365,80 +1365,80 @@ document.getElementById("buyerBtnInf").onclick = function () {
 document.getElementById("toggleBtn1").onclick = function () {
     if (player.autobuyers[0].target == document.getElementById("first")) {
         player.autobuyers[0].target = document.getElementById("firstMax")
-        document.getElementById("toggleBtn1").innerHTML="Buys until 10"
+        document.getElementById("toggleBtn1").innerHTML="一次购买10"
     } else {
         player.autobuyers[0].target = document.getElementById("first")
-        document.getElementById("toggleBtn1").innerHTML="Buys singles"
+        document.getElementById("toggleBtn1").innerHTML="购买1个"
     }
 }
 
 document.getElementById("toggleBtn2").onclick = function () {
     if (player.autobuyers[1].target == document.getElementById("second")) {
         player.autobuyers[1].target = document.getElementById("secondMax")
-        document.getElementById("toggleBtn2").innerHTML="Buys until 10"
+        document.getElementById("toggleBtn2").innerHTML="一次购买10"
     } else {
         player.autobuyers[1].target = document.getElementById("second")
-        document.getElementById("toggleBtn2").innerHTML="Buys singles"
+        document.getElementById("toggleBtn2").innerHTML="购买1个"
     }
 }
 
 document.getElementById("toggleBtn3").onclick = function () {
     if (player.autobuyers[2].target == document.getElementById("third")) {
         player.autobuyers[2].target = document.getElementById("thirdMax")
-        document.getElementById("toggleBtn3").innerHTML="Buys until 10"
+        document.getElementById("toggleBtn3").innerHTML="一次购买10"
     } else {
         player.autobuyers[2].target = document.getElementById("third")
-        document.getElementById("toggleBtn3").innerHTML="Buys singles"
+        document.getElementById("toggleBtn3").innerHTML="购买1个"
     }
 }
 
 document.getElementById("toggleBtn4").onclick = function () {
     if (player.autobuyers[3].target == document.getElementById("fourth")) {
         player.autobuyers[3].target = document.getElementById("fourthMax")
-        document.getElementById("toggleBtn4").innerHTML="Buys until 10"
+        document.getElementById("toggleBtn4").innerHTML="一次购买10"
     } else {
         player.autobuyers[3].target = document.getElementById("fourth")
-        document.getElementById("toggleBtn4").innerHTML="Buys singles"
+        document.getElementById("toggleBtn4").innerHTML="购买1个"
     }
 }
 
 document.getElementById("toggleBtn5").onclick = function () {
     if (player.autobuyers[4].target == document.getElementById("fifth")) {
         player.autobuyers[4].target = document.getElementById("fifthMax")
-        document.getElementById("toggleBtn5").innerHTML="Buys until 10"
+        document.getElementById("toggleBtn5").innerHTML="一次购买10"
     } else {
         player.autobuyers[4].target = document.getElementById("fifth")
-        document.getElementById("toggleBtn5").innerHTML="Buys singles"
+        document.getElementById("toggleBtn5").innerHTML="购买1个"
     }
 }
 
 document.getElementById("toggleBtn6").onclick = function () {
     if (player.autobuyers[5].target == document.getElementById("sixth")) {
         player.autobuyers[5].target = document.getElementById("sixthMax")
-        document.getElementById("toggleBtn6").innerHTML="Buys until 10"
+        document.getElementById("toggleBtn6").innerHTML="一次购买10"
     } else {
         player.autobuyers[5].target = document.getElementById("sixth")
-        document.getElementById("toggleBtn6").innerHTML="Buys singles"
+        document.getElementById("toggleBtn6").innerHTML="购买1个"
     }
 }
 
 document.getElementById("toggleBtn7").onclick = function () {
     if (player.autobuyers[6].target == document.getElementById("seventh")) {
         player.autobuyers[6].target = document.getElementById("seventhMax")
-        document.getElementById("toggleBtn7").innerHTML="Buys until 10"
+        document.getElementById("toggleBtn7").innerHTML="一次购买10"
     } else {
         player.autobuyers[6].target = document.getElementById("seventh")
-        document.getElementById("toggleBtn7").innerHTML="Buys singles"
+        document.getElementById("toggleBtn7").innerHTML="购买1个"
     }
 }
 
 document.getElementById("toggleBtn8").onclick = function () {
     if (player.autobuyers[7].target == document.getElementById("eight")) {
         player.autobuyers[7].target = document.getElementById("eightMax")
-        document.getElementById("toggleBtn8").innerHTML="Buys until 10"
+        document.getElementById("toggleBtn8").innerHTML="一次购买10"
     } else {
         player.autobuyers[7].target = document.getElementById("eight")
-        document.getElementById("toggleBtn8").innerHTML="Buys singles"
+        document.getElementById("toggleBtn8").innerHTML="购买1个"
     }
 }
 
@@ -1448,7 +1448,7 @@ document.getElementById("toggleBtnTickSpeed").onclick = function () {
         document.getElementById("toggleBtnTickSpeed").innerHTML="Buys max"
     } else {
         player.autobuyers[8].target = document.getElementById("tickSpeed")
-        document.getElementById("toggleBtnTickSpeed").innerHTML="Buys singles"
+        document.getElementById("toggleBtnTickSpeed").innerHTML="购买1个"
     }
 }
 
@@ -1608,10 +1608,10 @@ function verify_save(obj) {
 }
 
 document.getElementById("importbtn").onclick = function () {
-    var save_data = prompt("Input your save.");
+    var save_data = prompt("这这里粘贴您的游戏存档。");
     save_data = JSON.parse(atob(save_data), function(k, v) { return (v === Infinity) ? "Infinity" : v; });
     if (!save_data || !verify_save(save_data)) {
-        alert('could not load the save..');
+        alert('你的存档不能加载..');
         load_custom_game();
         return;
     }
@@ -1625,7 +1625,7 @@ document.getElementById("importbtn").onclick = function () {
 
 
 document.getElementById("reset").onclick = function () {
-    if (confirm("Do you really want to erase all your progress?")) {
+    if (confirm("你真的想清除所有的游戏进度吗？")) {
         set_cookie('dimensionSave', defaultStart);
         player = defaultStart
         save_game();
@@ -1661,9 +1661,9 @@ function setAchieveTooltip() {
     var dimensional = document.getElementById("Multidimensional")
 
     apocAchieve.setAttribute('ach-tooltip', "Get over " + formatValue(player.options.notation, 1e80, 0, 0) + " antimatter");
-    noPointAchieve.setAttribute('ach-tooltip', "Buy a single First Dimension when you have over " + formatValue(player.options.notation, 1e150, 0, 0) + " of them");
+    noPointAchieve.setAttribute('ach-tooltip', "当你结束时，买单一的第一维度 " + formatValue(player.options.notation, 1e150, 0, 0) + " of them");
     forgotAchieve.setAttribute('ach-tooltip', "Get any Dimension multiplier over " + formatValue(player.options.notation, 1e31, 0, 0));
-    sanic.setAttribute('ach-tooltip', "Have antimatter/sec exceed your current antimatter above " + formatValue(player.options.notation, 1e63, 0, 0));
+    sanic.setAttribute('ach-tooltip', "Have antimatter/秒 exceed your current antimatter above " + formatValue(player.options.notation, 1e63, 0, 0));
     potato.setAttribute('ach-tooltip', "Get more than " + formatValue(player.options.notation, 1e28, 0, 0) + " ticks per second");
     dimensional.setAttribute('ach-tooltip', "Reach " + formatValue(player.options.notation, 1e12, 0, 0) + " of all dimensions except 8th");
 }
@@ -1672,19 +1672,19 @@ document.getElementById("notation").onclick = function () {
     player.options.scientific = !player.options.scientific;
     if (player.options.notation === "Emojis") {
         player.options.notation = "Scientific";
-        document.getElementById("notation").innerHTML = ("Notation: Scientific")
+        document.getElementById("notation").innerHTML = ("数字格式: 科学计数法")
     } else if (player.options.notation === "Scientific") {
         player.options.notation = "Engineering";
-        document.getElementById("notation").innerHTML = ("Notation: Engineering")
+        document.getElementById("notation").innerHTML = ("数字格式: 工程")
     } else if (player.options.notation === "Engineering") {
         player.options.notation = "Letters";
-        document.getElementById("notation").innerHTML = ("Notation: Letters")
+        document.getElementById("notation").innerHTML = ("数字格式: 字母")
     } else if (player.options.notation === "Letters") {
         player.options.notation = "Standard";
-        document.getElementById("notation").innerHTML = ("Notation: Standard")
+        document.getElementById("notation").innerHTML = ("数字格式: 标准")
     } else if (player.options.notation === "Standard") {
         player.options.notation = "Emojis";
-        document.getElementById("notation").innerHTML = ("Notation: Cancer")
+        document.getElementById("notation").innerHTML = ("数字格式: 复数")
     }
     setAchieveTooltip();
     updateDimensions();
@@ -2629,7 +2629,7 @@ var newsArray = ["You just made your 1,000,000,000,000,000 antimatter. This one 
 "Alright -Alright", "The English greeting is not present in Antimatter speak.", "To buy max or not to buy max, that is the question", "You do know that you won't reach Infinity in -1 seconds, right?", "This antimatter triggers me",
 "No, mom, I can't pause this game.", "Scientific notation has entered the battlefield.", "Make the Universe Great Again! -Tronald Dump", "#dank-maymays",
 "A new religion has been created, and it's spreading like wildfire. The believers of this religion worship the Heavenly Pelle, the goddess of antimatter. They also believe that 10^308 is infinite.",
-"Someone has just touched a blob, and blown up. Was the blob antimatter, or was the guy made of Explodium?", "Antimatter people seem to be even more afraid of 13 then we are. They destroyed entire galaxies just to remove 13 from their percents.",
+"Someone has just touched a blob, and blown up. Was the blob antimatter, or was the guy made of Explodium?", "反物质似乎更加害怕13，那么我们是。 他们摧毁了整个星系只是为了从他们的百分比中删除13。",
 "If you are not playing on Kongregate or ivark.github.io, the site is bootleg.", "Rate 5 on Kongregate so more people can experience this 5 star Rating", "BOO!", "You ate for too long. -hevipelle", "I hate myself. -Boo-chan",
 "Gee golly -Xandawesome", "Need more quotes! -hevipelle", "Above us, there is nothing above, But the stars, above.", "If black lives matter, do white lives antimatter?", "Somebody wasn't nice, he got an antimatter-storm.",
 "You are living, you occupy space, you have a mass, you matter... unless you antimatter.", "I clicked too fast... my PC is now dematerialised.",
