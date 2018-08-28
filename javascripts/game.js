@@ -438,7 +438,7 @@ function updateDimensions() {
         document.getElementById("softReset").innerHTML = "重置游戏到达下一个维度";
     }
 
-    if (player.currentChallenge != "challenge4") document.getElementById("secondResetLabel").innerHTML = '反物质星系：需要 ' + getGalaxyRequirement() + ' Eighth Dimensions';
+    if (player.currentChallenge != "challenge4") document.getElementById("secondResetLabel").innerHTML = '反物质星系：需要 ' + getGalaxyRequirement() + ' 第8维度';
     else document.getElementById("secondResetLabel").innerHTML = '反物质星系：需要 ' + getGalaxyRequirement() + ' 第六维度';
     document.getElementById("totalmoney").innerHTML = '你总共制造了' + shortenMoney(player.totalmoney) + ' 反物质.';
     document.getElementById("totalresets").innerHTML = '你完成了 ' + player.resets + ' 次软复位.';
@@ -451,7 +451,7 @@ function updateDimensions() {
         document.getElementById("infinityPoints").innerHTML = ""
         document.getElementById("thisInfinity").innerHTML = ""
     } else {
-        document.getElementById("bestInfinity").innerHTML = "Your fastest infinity is in " + timeDisplay(player.bestInfinityTime) + "."
+        document.getElementById("bestInfinity").innerHTML = "你最快的无限远" + timeDisplay(player.bestInfinityTime) + "."
         document.getElementById("thisInfinity").innerHTML = "You have spent " + timeDisplay(player.thisInfinityTime) + " in this infinity."
         document.getElementById("infinityPoints").innerHTML = "You have  " + formatValue(player.options.notation, player.infinityPoints, 2, 0) + " Infinity points."
         document.getElementById("infinitied").innerHTML = "You have infinitied " + player.infinitied + " times."
